@@ -1,115 +1,126 @@
-# Skilled Execution Plan Mode Plugin
+# Skilled Execution Plan Mode Marketplace
 
-A Claude Code plugin that enables proactive skill evaluation during plan mode.
+**Version:** 1.0.0
+**Owner:** Adam Brooks (william.brooks@familysearch.org)
+
+A Claude Code marketplace providing plugins for enhanced plan mode functionality.
+
+---
 
 ## Overview
 
-When enabled, this plugin causes Claude to evaluate and mention which skills might be useful for each step during plan mode, giving you visibility into what capabilities will be leveraged before execution begins.
+This marketplace provides plugins that enhance Claude Code's plan mode capabilities, allowing you to control how Claude presents and executes plans.
 
-## Features
+---
 
-- **Toggle On/Off**: Easy slash commands to enable or disable the mode
-- **Persistent**: Setting persists across all sessions
-- **Automatic**: SessionStart hook automatically configures Claude's behavior
-- **Shareable**: Plugin can be distributed to teams and organizations
+## Quick Start
 
-## Installation
+### Installation
 
-### From Local Directory
+Add this marketplace to Claude Code:
 
-1. Copy the plugin directory to your desired location
-2. Install the plugin:
-   ```
-   /install-plugin /path/to/skilled-execution-plan-mode
-   ```
-
-### From Git Repository
-
-```
-/install-plugin https://github.com/your-org/skilled-execution-plan-mode
+```bash
+/plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
 ```
 
-## Usage
+### First Time Setup
 
-### Enable Skilled Execution Plan Mode
+Once the marketplace is installed, the plugins will be available for use. Start with:
 
-```
+```bash
 /skilled-plan-on
 ```
 
-This will:
-- Create/update `.claude/preferences.json` with `SKILLED_EXECUTION_PLAN_MODE: true`
-- Take effect in the next session
-- Confirm the change to you
+This will enable skilled execution plan mode. See the plugin documentation for more details.
 
-### Disable Skilled Execution Plan Mode
+---
+
+## Marketplace Structure
 
 ```
-/skilled-plan-off
+skilled-execution-plan-mode/
+├── .claude-plugin/
+│   └── marketplace.json              # Marketplace manifest
+├── plugins/
+│   └── skilled-execution-plan-mode/  # Main plugin
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── commands/
+│       │   ├── skilled-plan-on.md
+│       │   └── skilled-plan-off.md
+│       ├── hooks/
+│       │   └── session-start.sh
+│       └── README.md                 # Plugin documentation
+└── README.md                         # This file
 ```
 
-This will:
-- Update `.claude/preferences.json` with `SKILLED_EXECUTION_PLAN_MODE: false`
-- Revert to default planning behavior
-- Confirm the change to you
+---
+
+## Available Plugins
+
+### Skilled Execution Plan Mode Plugin (v1.0.0)
+
+**Category:** Productivity
+**Status:** Available
+
+Control whether Claude proactively evaluates and mentions which skills will be used during plan mode.
+
+**Features:**
+- Toggle commands (`/skilled-plan-on`, `/skilled-plan-off`)
+- SessionStart hook for automatic configuration
+- Persistent settings via `.claude/preferences.json`
+- Complete documentation and examples
+
+**Quick Start:**
+```bash
+/skilled-plan-on     # Enable the feature
+/skilled-plan-off    # Disable the feature
+```
+
+**Learn More:** See `plugins/skilled-execution-plan-mode/README.md`
+
+---
 
 ## How It Works
 
-### Components
+### When Enabled
 
-1. **Slash Commands** (`commands/`)
-   - `/skilled-plan-on` - Enables the mode
-   - `/skilled-plan-off` - Disables the mode
+When skilled execution plan mode is enabled:
 
-2. **SessionStart Hook** (`hooks/session-start.sh`)
-   - Runs automatically at the start of each session
-   - Reads `.claude/preferences.json`
-   - Injects instructions to Claude if mode is enabled
+1. You run `/skilled-plan-on` to enable the feature
+2. The setting is saved to `.claude/preferences.json`
+3. On each new session, the SessionStart hook checks this setting
+4. If enabled, Claude is instructed to evaluate and mention skills during planning
+5. When you enter plan mode, Claude will proactively identify which skills might be useful
+6. Example: "Step 2: Extract PDF data [**pdf** skill]"
 
-3. **Configuration** (`.claude/preferences.json`)
-   - Stores the persistent setting
-   - Format: `{"SKILLED_EXECUTION_PLAN_MODE": true/false}`
+### When Disabled (Default)
 
-### Behavior During Plan Mode
+When the mode is disabled or not set:
 
-**When Enabled:**
-- Claude evaluates which skills might be useful for each step
-- Skills are mentioned in the plan presentation
-- Example: "Step 2: Extract PDF data [**pdf** skill]"
-- Provides visibility before execution
+1. Claude uses the default planning behavior
+2. Skills are discovered and invoked organically during execution
+3. No upfront skill evaluation during planning
 
-**When Disabled (default):**
-- Standard planning behavior
-- Skills discovered and invoked organically during execution
-- No upfront skill evaluation
-
-## Example
-
-```
-User: /skilled-plan-on
-Claude: ✓ Skilled execution plan mode is now enabled...
-
-[New session starts]
-
-User: [plan mode] Extract text from these PDFs and create a summary spreadsheet
-
-Claude: Here's the plan:
-1. Extract text from PDF files [**pdf** skill]
-2. Analyze and summarize the extracted content
-3. Create spreadsheet with summaries [**xlsx** skill]
-4. Format and validate the output
-
-Ready to proceed?
-```
+---
 
 ## Requirements
 
 - Claude Code (latest version recommended)
-- `jq` command-line tool (for JSON parsing in hook)
+- `jq` command-line tool (for JSON parsing in hooks)
 
-## Configuration File
+### Installing jq
 
-The plugin creates/updates `.claude/preferences.json`:
+If `jq` is not installed:
+- **Ubuntu/Debian**: `sudo apt-get install jq`
+- **MacOS**: `brew install jq`
+- **RHEL/CentOS**: `sudo yum install jq`
+
+---
+
+## Configuration
+
+The marketplace stores configuration in `.claude/preferences.json`:
 
 ```json
 {
@@ -117,91 +128,87 @@ The plugin creates/updates `.claude/preferences.json`:
 }
 ```
 
-This file is project-specific and stored in your project's `.claude` directory.
+This file is project-specific and persists across all sessions.
+
+---
 
 ## Troubleshooting
 
-### Commands not working
-- Start a new session after installing the plugin
-- Verify the plugin is installed: check `.claude/plugins/`
+### Marketplace not loading
 
-### Mode not taking effect
-- Verify `.claude/preferences.json` exists and has the correct value
-- Check that the SessionStart hook has execute permissions
-- Ensure `jq` is installed: `which jq`
+1. Verify the marketplace was added correctly:
+   ```bash
+   /plugin marketplace list
+   ```
+
+2. Try removing and re-adding:
+   ```bash
+   /plugin marketplace remove WAdamBrooksFS/skilled-execution-plan-mode-plugin
+   /plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
+   ```
+
+### Commands not working
+
+- Verify the plugin is installed from the marketplace
+- Start a new session for commands to be recognized
+- Run `/help` to see if the commands appear
 
 ### Hook not running
-- Check hook permissions: `ls -l skilled-execution-plan-mode/hooks/`
-- Make executable: `chmod +x skilled-execution-plan-mode/hooks/session-start.sh`
 
-### Installing jq
-If `jq` is not installed:
-- **Ubuntu/Debian**: `sudo apt-get install jq`
-- **MacOS**: `brew install jq`
-- **RHEL/CentOS**: `sudo yum install jq`
+- Check that `jq` is installed: `which jq`
+- Verify hook permissions in the plugin directory
+- Check Claude Code logs for any errors
 
-## Sharing with Your Organization
+---
 
-### Via Git Repository
+## For Organizations
 
-1. Push the plugin to your organization's Git server:
-   ```bash
-   cd skilled-execution-plan-mode
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/your-org/skilled-execution-plan-mode
-   git push -u origin main
-   ```
+### Sharing with Your Team
 
-2. Team members install with:
-   ```
-   /install-plugin https://github.com/your-org/skilled-execution-plan-mode
-   ```
+This marketplace can be shared across your organization:
 
-### Via Shared Directory
-
-1. Copy the plugin to a shared location
-2. Team members install with:
-   ```
-   /install-plugin /shared/path/to/skilled-execution-plan-mode
-   ```
-
-## Development
-
-### Plugin Structure
-
-```
-skilled-execution-plan-mode/
-├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
-├── commands/
-│   ├── skilled-plan-on.md   # Enable command
-│   └── skilled-plan-off.md  # Disable command
-├── hooks/
-│   └── session-start.sh     # SessionStart hook
-└── README.md                # This file
+**Via GitHub (Recommended):**
+```bash
+/plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
 ```
 
-### Testing Locally
+Team members can then install plugins from the marketplace using standard Claude Code plugin commands.
 
-1. Install the plugin locally
-2. Run `/skilled-plan-on`
-3. Start a new session and enter plan mode
-4. Verify Claude mentions skills in the plan
-5. Run `/skilled-plan-off` and verify default behavior returns
+---
+
+## Contributing
+
+To add a new plugin to this marketplace:
+
+1. Fork this repository
+2. Create your plugin in `plugins/your-plugin/`
+3. Register it in `.claude-plugin/marketplace.json`
+4. Add documentation in `plugins/your-plugin/README.md`
+5. Submit a pull request
+
+---
+
+## Support
+
+**Questions or issues?**
+
+- Check the plugin-specific README: `plugins/skilled-execution-plan-mode/README.md`
+- File an issue: https://github.com/WAdamBrooksFS/skilled-execution-plan-mode-plugin/issues
+- Contact: Adam Brooks (william.brooks@familysearch.org)
+
+---
+
+## Version History
+
+**1.0.0** (2025-10-21)
+- Initial marketplace release
+- Skilled execution plan mode plugin (v1.0.0)
+- Toggle commands for enabling/disabling
+- SessionStart hook integration
+- Persistent configuration
+
+---
 
 ## License
 
 [Your License Here]
-
-## Support
-
-For issues or questions, contact [your-support-email] or file an issue in the repository.
-
-## Version History
-
-- **1.0.0** - Initial release
-  - Toggle commands for enabling/disabling
-  - SessionStart hook integration
-  - Persistent configuration

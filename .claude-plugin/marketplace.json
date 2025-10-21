@@ -1,0 +1,22 @@
+{
+  "name": "skilled-execution-plan-mode",
+  "owner": {
+    "name": "Adam Brooks",
+    "email": "william.brooks@familysearch.org",
+    "url": "https://github.com/WAdamBrooksFS"
+  },
+  "metadata": {
+    "description": "Marketplace for the skilled execution plan mode plugin, enabling Claude to proactively evaluate and mention which skills will be used during plan mode.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "skilled-execution-plan-mode",
+      "source": "./plugins/skilled-execution-plan-mode",
+      "description": "Toggle skilled execution plan mode to have Claude evaluate and mention which skills will be used during planning. Provides /skilled-plan-on and /skilled-plan-off commands with persistent configuration.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "keywords": ["planning", "skills", "plan-mode", "configuration", "productivity"]
+    }
+  ]
+}
