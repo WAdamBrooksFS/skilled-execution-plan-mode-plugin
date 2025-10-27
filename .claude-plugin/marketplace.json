@@ -6,7 +6,7 @@
     "url": "https://github.com/WAdamBrooksFS"
   },
   "metadata": {
-    "description": "Marketplace for the skilled execution plan mode plugin, enabling Claude to proactively evaluate and mention which skills will be used during plan mode.",
+    "description": "Marketplace for execution plan mode plugins, enabling Claude to proactively evaluate and mention which skills, agents, and MCP servers will be used during plan mode.",
     "version": "1.0.0"
   },
   "plugins": [
@@ -17,6 +17,22 @@
       "version": "1.0.0",
       "category": "productivity",
       "keywords": ["planning", "skills", "plan-mode", "configuration", "productivity"]
+    },
+    {
+      "name": "agent-execution-plan-mode",
+      "source": "./plugins/agent-execution-plan-mode",
+      "description": "Toggle agent execution plan mode to have Claude evaluate and mention which agents will be useful during planning. Provides /agent-plan-on and /agent-plan-off commands with persistent configuration.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "keywords": ["planning", "agents", "plan-mode", "configuration", "productivity", "qa", "testing"]
+    },
+    {
+      "name": "mcp-execution-plan-mode",
+      "source": "./plugins/mcp-execution-plan-mode",
+      "description": "Toggle MCP execution plan mode to have Claude evaluate and mention which MCP servers will be useful during planning. Provides /mcp-plan-on and /mcp-plan-off commands with persistent configuration.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "keywords": ["planning", "mcp", "plan-mode", "configuration", "productivity", "automation"]
     }
   ]
 }
