@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash hooks/session-start.sh"
+            "command": "bash ~/.claude/plugins/marketplaces/skilled-execution-plan-mode/plugins/mcp-execution-plan-mode/hooks/session-start.sh"
           }
         ]
       }

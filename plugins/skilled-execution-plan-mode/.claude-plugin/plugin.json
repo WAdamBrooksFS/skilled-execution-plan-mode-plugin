@@ -9,7 +9,5 @@
     "./commands/skilled-plan-on.md",
     "./commands/skilled-plan-off.md"
   ],
-  "hooks": [
-    "./hooks/session-start.json"
-  ]
+  "hooks": "./hooks/hooks.json"
 }
