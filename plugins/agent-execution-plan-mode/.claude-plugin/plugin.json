@@ -2,10 +2,10 @@
   "name": "agent-execution-plan-mode",
   "version": "1.0.0",
   "description": "Toggle agent execution plan mode to have Claude evaluate and mention which agents will be useful during planning",
-  "author": "adam_brooks",
+  "author": {"name": "adam_brooks"},
   "commands": [
-    "commands/agent-plan-on.md",
-    "commands/agent-plan-off.md"
+    "./commands/agent-plan-on.md",
+    "./commands/agent-plan-off.md"
   ],
   "hooks": "./hooks/hooks.json"
 }
