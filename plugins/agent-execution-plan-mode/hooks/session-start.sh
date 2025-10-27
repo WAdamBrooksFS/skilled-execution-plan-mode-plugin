@@ -5,9 +5,19 @@
 
 PREFS_FILE=".claude/preferences.json"
 
-# Check if preferences file exists
+# Create .claude directory and preferences file if they don't exist
 if [ ! -f "$PREFS_FILE" ]; then
-  exit 0
+  mkdir -p ".claude"
+  echo "{}" > "$PREFS_FILE"
+fi
+
+# Auto-initialize AGENT_EXECUTION_PLAN_MODE if it doesn't exist
+if ! jq -e '.AGENT_EXECUTION_PLAN_MODE' "$PREFS_FILE" >/dev/null 2>&1; then
+  # Add the key with default value (false)
+  jq '. + {"AGENT_EXECUTION_PLAN_MODE": false}' "$PREFS_FILE" > "$PREFS_FILE.tmp" 2>/dev/null
+  if [ $? -eq 0 ]; then
+    mv "$PREFS_FILE.tmp" "$PREFS_FILE"
+  fi
 fi
 
 # Read the AGENT_EXECUTION_PLAN_MODE value
