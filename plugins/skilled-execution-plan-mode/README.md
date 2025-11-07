@@ -102,8 +102,41 @@ Ready to proceed?
 
 ## Requirements
 
+### All Platforms
 - Claude Code (latest version recommended)
+
+### Platform-Specific Requirements
+
+**Windows:**
+- No additional dependencies required
+- Uses native PowerShell for hook execution
+
+**Linux / macOS / WSL / Git Bash:**
 - `jq` command-line tool (for JSON parsing in hook)
+
+### Cross-Platform Support
+
+This plugin automatically detects your platform and uses the appropriate script:
+- **PowerShell** (Windows, or pwsh on any platform) - no external dependencies
+- **Bash** (Linux, macOS, WSL, Git Bash) - requires jq
+
+The plugin includes:
+- `hooks/session-start.ps1` - PowerShell version (Windows-native)
+- `hooks/session-start.sh` - Bash version (Unix-native)
+- `hooks/session-start-wrapper.sh` - Platform detection wrapper
+
+The wrapper automatically chooses the correct script based on available shells, ensuring seamless operation across all platforms.
+
+### Supported Environments
+
+| Environment | Shell Used | External Dependencies | Status |
+|------------|------------|----------------------|--------|
+| Windows (native) | PowerShell | None | ✅ Fully Supported |
+| Windows + WSL | Bash | jq | ✅ Fully Supported |
+| Windows + Git Bash | Bash | jq | ✅ Fully Supported |
+| Linux | Bash | jq | ✅ Fully Supported |
+| macOS | Bash | jq | ✅ Fully Supported |
+| PowerShell Core (any OS) | PowerShell | None | ✅ Fully Supported |
 
 ## Configuration File
 
@@ -170,11 +203,18 @@ Then uninstall the plugin as shown above.
 - Check hook permissions: `ls -l skilled-execution-plan-mode/hooks/`
 - Make executable: `chmod +x skilled-execution-plan-mode/hooks/session-start.sh`
 
-### Installing jq
-If `jq` is not installed:
+### Installing jq (Linux/macOS only)
+
+If you're using bash (Linux, macOS, WSL, Git Bash) and `jq` is not installed:
+
 - **Ubuntu/Debian**: `sudo apt-get install jq`
-- **MacOS**: `brew install jq`
+- **macOS**: `brew install jq`
 - **RHEL/CentOS**: `sudo yum install jq`
+- **Arch Linux**: `sudo pacman -S jq`
+- **Alpine Linux**: `apk add jq`
+- **Manual Download**: https://stedolan.github.io/jq/download/
+
+**Windows PowerShell users**: No jq installation needed - PowerShell has native JSON support
 
 ## Sharing with Your Organization
 

@@ -3,6 +3,21 @@
 # SessionStart hook for Skilled Execution Plan Mode
 # Checks .claude/preferences.json and injects context if the mode is enabled
 
+# Check if jq is installed (required for JSON parsing)
+if ! command -v jq >/dev/null 2>&1; then
+  echo "ERROR: jq is required but not installed." >&2
+  echo "" >&2
+  echo "Please install jq:" >&2
+  echo "  Ubuntu/Debian: sudo apt-get install jq" >&2
+  echo "  macOS:         brew install jq" >&2
+  echo "  RHEL/CentOS:   sudo yum install jq" >&2
+  echo "  Arch Linux:    sudo pacman -S jq" >&2
+  echo "  Alpine:        apk add jq" >&2
+  echo "" >&2
+  echo "Or download from: https://stedolan.github.io/jq/download/" >&2
+  exit 1
+fi
+
 PREFS_FILE=".claude/preferences.json"
 
 # Create .claude directory and preferences file if they don't exist
