@@ -117,6 +117,44 @@ The plugin creates/updates `.claude/preferences.json`:
 
 This file is project-specific and stored in your project's `.claude` directory.
 
+**Note:** The `.claude/preferences.json` file may be shared by multiple plugins. This plugin only manages the `SKILLED_EXECUTION_PLAN_MODE` key and will not affect other plugins' preferences.
+
+## Uninstallation
+
+To completely remove this plugin and clean up all its configuration:
+
+### Step 1: Clean up configuration
+
+```
+/skilled-plan-cleanup
+```
+
+This command will:
+- Remove the `SKILLED_EXECUTION_PLAN_MODE` key from `.claude/preferences.json`
+- If no other plugin preferences exist, delete the entire preferences file
+- If other plugins have preferences, preserve them and only remove this plugin's setting
+
+### Step 2: Uninstall the plugin
+
+```
+/plugin uninstall skilled-execution-plan-mode@skilled-execution-plan-mode
+```
+
+### Manual Cleanup (Alternative)
+
+If you prefer to clean up manually, you can remove the configuration key with `jq`:
+
+```bash
+# Remove only this plugin's key
+jq 'del(.SKILLED_EXECUTION_PLAN_MODE)' .claude/preferences.json > .claude/preferences.json.tmp
+mv .claude/preferences.json.tmp .claude/preferences.json
+
+# Or, if this is the only preference, delete the entire file
+rm .claude/preferences.json
+```
+
+Then uninstall the plugin as shown above.
+
 ## Troubleshooting
 
 ### Commands not working

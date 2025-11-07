@@ -5,9 +5,8 @@
   "author": "adam_brooks",
   "commands": [
     "commands/skilled-plan-on.md",
-    "commands/skilled-plan-off.md"
+    "commands/skilled-plan-off.md",
+    "commands/skilled-plan-cleanup.md"
   ],
-  "hooks": [
-    "hooks/session-start.sh"
-  ]
+  "hooks": "./hooks/hooks.json"
 }
