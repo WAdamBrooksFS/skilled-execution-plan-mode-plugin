@@ -4,7 +4,7 @@ A Claude Code plugin that enables proactive skill evaluation during plan mode.
 
 ## Overview
 
-When enabled, this plugin causes Claude to evaluate and mention which skills might be useful for each step during plan mode, giving you visibility into what capabilities will be leveraged before execution begins.
+This plugin is **enabled by default** and causes Claude to evaluate and mention which available skills might be useful for each step during plan mode. The plugin automatically detects which skills are actually available and enabled in your environment, ensuring recommendations are accurate and actionable. This gives you visibility into what capabilities will be leveraged before execution begins.
 
 ## Features
 
@@ -28,6 +28,12 @@ Add the marketplace to Claude Code:
 Once installed, the plugin commands will be available in your Claude Code session.
 
 ## Usage
+
+### Default Behavior
+
+This plugin is **enabled by default** upon installation. Claude will automatically evaluate and mention available skills during plan mode without any configuration needed.
+
+You can toggle the plugin on/off at any time using the commands below.
 
 ### Enable Skilled Execution Plan Mode
 
@@ -70,13 +76,15 @@ This will:
 
 ### Behavior During Plan Mode
 
-**When Enabled:**
-- Claude evaluates which skills might be useful for each step
+**When Enabled (default):**
+- Plugin automatically detects which skills are available and enabled
+- Claude evaluates which AVAILABLE skills might be useful for each step
+- Only available/enabled skills are considered - disabled skills are ignored
 - Skills are mentioned in the plan presentation
 - Example: "Step 2: Extract PDF data [**pdf** skill]"
 - Provides visibility before execution
 
-**When Disabled (default):**
+**When Disabled:**
 - Standard planning behavior
 - Skills discovered and invoked organically during execution
 - No upfront skill evaluation

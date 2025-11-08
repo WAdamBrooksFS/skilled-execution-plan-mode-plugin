@@ -4,7 +4,7 @@ A Claude Code plugin that enables proactive MCP server evaluation during plan mo
 
 ## Overview
 
-When enabled, this plugin causes Claude to evaluate and mention which MCP servers might be useful for each step during plan mode, giving you visibility into what MCP capabilities will be leveraged before execution begins.
+This plugin is **enabled by default** and causes Claude to evaluate and mention which available MCP servers might be useful for each step during plan mode. The plugin automatically detects which MCP servers are actually installed, available, and enabled in your environment, ensuring recommendations are accurate and actionable. This gives you visibility into what MCP capabilities will be leveraged before execution begins.
 
 ## Features
 
@@ -31,6 +31,12 @@ When enabled, this plugin causes Claude to evaluate and mention which MCP server
 ```
 
 ## Usage
+
+### Default Behavior
+
+This plugin is **enabled by default** upon installation. Claude will automatically evaluate and mention available MCP servers during plan mode without any configuration needed.
+
+You can toggle the plugin on/off at any time using the commands below.
 
 ### Enable MCP Execution Plan Mode
 
@@ -73,20 +79,24 @@ This will:
 
 ### Behavior During Plan Mode
 
-**When Enabled:**
-- Claude evaluates which MCP servers might be useful for each step
+**When Enabled (default):**
+- Plugin automatically detects which MCP servers are installed, available, and enabled
+- Claude evaluates which AVAILABLE MCP servers might be useful for each step
+- Only available/enabled MCP servers are considered - disabled MCPs are ignored
 - MCP servers are mentioned in the plan presentation
 - Example: "Step 2: Browser automation [**mcp__plugin_sdet_playwright** MCP]"
 - Provides visibility before execution
 
-**When Disabled (default):**
+**When Disabled:**
 - Standard planning behavior
 - MCP servers discovered and invoked organically during execution
 - No upfront MCP evaluation
 
 ### Common MCP Servers
 
-The plugin helps Claude consider available MCP servers during planning, such as:
+The plugin automatically detects which MCP servers are installed and enabled in your environment. It checks the available MCP tools (prefixed with `mcp__` in the function list) to determine what's actually available.
+
+During plan mode, the plugin helps Claude consider available MCP servers. Common examples include:
 
 - **mcp__plugin_sdet_playwright**: Browser automation and testing
   - Navigation, clicking, form filling
@@ -97,6 +107,8 @@ The plugin helps Claude consider available MCP servers during planning, such as:
   - Console message tracking
   - Dialog handling
   - Tab management
+
+**Important:** Only MCP servers that are installed and enabled in your environment will be considered during planning. The list above shows common examples, but actual availability depends on your Claude Code configuration and installed plugins.
 
 ## Example
 

@@ -4,7 +4,7 @@ A Claude Code plugin that enables proactive agent evaluation during plan mode.
 
 ## Overview
 
-When enabled, this plugin causes Claude to evaluate and mention which agents might be useful for each step during plan mode, giving you visibility into what agent capabilities will be leveraged before execution begins.
+This plugin is **enabled by default** and causes Claude to evaluate and mention which available agents might be useful for each step during plan mode. The plugin automatically detects which agents are actually available and enabled in your environment, ensuring recommendations are accurate and actionable. This gives you visibility into what agent capabilities will be leveraged before execution begins.
 
 ## Features
 
@@ -31,6 +31,12 @@ When enabled, this plugin causes Claude to evaluate and mention which agents mig
 ```
 
 ## Usage
+
+### Default Behavior
+
+This plugin is **enabled by default** upon installation. Claude will automatically evaluate and mention available agents during plan mode without any configuration needed.
+
+You can toggle the plugin on/off at any time using the commands below.
 
 ### Enable Agent Execution Plan Mode
 
@@ -73,38 +79,42 @@ This will:
 
 ### Behavior During Plan Mode
 
-**When Enabled:**
-- Claude evaluates which agents might be useful for each step
+**When Enabled (default):**
+- Plugin automatically detects which agents are available and enabled
+- Claude evaluates which AVAILABLE agents might be useful for each step
+- Only available/enabled agents are considered - disabled agents are ignored
 - Agents are mentioned in the plan presentation
 - Example: "Step 2: Explore codebase [**Explore** agent]"
 - Provides visibility before execution
 
-**When Disabled (default):**
+**When Disabled:**
 - Standard planning behavior
 - Agents discovered and invoked organically during execution
 - No upfront agent evaluation
 
 ### Available Agents
 
-The plugin helps Claude consider these agents during planning:
+The plugin automatically detects which agents are available and enabled in your environment. During plan mode, only agents that are currently available will be considered and recommended.
 
+**How Agent Discovery Works:**
+
+The plugin checks your Claude Code configuration to discover:
+- **Built-in agents** (like Explore, general-purpose, Plan) - typically always available
+- **Custom agents** configured in your environment via plugins
+- **Agent availability** and enabled/disabled status based on plugin configuration
+
+**Common Built-In Agents:**
 - **general-purpose**: Complex multi-step tasks, code search, autonomous execution
 - **Explore**: Fast codebase exploration, pattern matching, keyword searches
-- **sdet:playwright-engineer**: Playwright setup, smoke/a11y tests, CI guidance
-- **sdet:orchestration-agent**: Test planning, triaging, delegation
-- **sdet:a11y-inspector**: Comprehensive accessibility testing with reports
-- **sdet:qa-shared-librarian**: Org-shared test utilities and snippets
-- **sdet:github-ops**: Repository/PR workflow for test assets
-- **sdet:spring-boot-api-tester**: RestAssured smoke tests for Spring Boot
-- **sdet:wdio-engineer**: WebdriverIO setup and maintenance
-- **sdet:figma-bridge**: Figma specs to Playwright assertions
-- **sdet:intl-auditor**: Internationalization checks and locale tests
-- **sdet:risk-strategist**: Risk quantification and test prioritization
-- **sdet:machine-provisioner**: Local environment readiness checks
-- **sdet:docs-steward**: README and test plan generation
-- **sdet:jira-analyst**: JIRA to BDD scenarios and Playwright tests
-- **sdet:test-case-generator**: AC/specs to BDD and Playwright stubs
-- **mcp-specialist**: MCP server installation, configuration, troubleshooting
+- **Plan**: Planning and strategy for complex tasks
+
+**Plugin-Provided Agents:**
+Additional agents may be available if their parent plugins are installed and enabled. For example:
+- **sdet:*** agents (requires sdet plugin to be enabled)
+- **mcp-specialist** (if available in your environment)
+- Other custom agents from marketplace plugins
+
+**Important:** The plugin will only recommend agents that are actually installed and enabled in your Claude Code environment. This ensures recommendations are always accurate and actionable based on your actual setup.
 
 ## Example
 
