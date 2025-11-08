@@ -121,9 +121,42 @@ Ready to proceed?
 
 ## Requirements
 
+### All Platforms
 - Claude Code (latest version recommended)
-- `jq` command-line tool (for JSON parsing in hook)
 - MCP servers installed in your environment (as needed)
+
+### Platform-Specific Requirements
+
+**Windows:**
+- No additional dependencies required
+- Uses native PowerShell for hook execution
+
+**Linux / macOS / WSL / Git Bash:**
+- `jq` command-line tool (for JSON parsing in hook)
+
+### Cross-Platform Support
+
+This plugin automatically detects your platform and uses the appropriate script:
+- **PowerShell** (Windows, or pwsh on any platform) - no external dependencies
+- **Bash** (Linux, macOS, WSL, Git Bash) - requires jq
+
+The plugin includes:
+- `hooks/session-start.ps1` - PowerShell version (Windows-native)
+- `hooks/session-start.sh` - Bash version (Unix-native)
+- `hooks/session-start-wrapper.sh` - Platform detection wrapper
+
+The wrapper automatically chooses the correct script based on available shells, ensuring seamless operation across all platforms.
+
+### Supported Environments
+
+| Environment | Shell Used | External Dependencies | Status |
+|------------|------------|----------------------|--------|
+| Windows (native) | PowerShell | None | ✅ Fully Supported |
+| Windows + WSL | Bash | jq | ✅ Fully Supported |
+| Windows + Git Bash | Bash | jq | ✅ Fully Supported |
+| Linux | Bash | jq | ✅ Fully Supported |
+| macOS | Bash | jq | ✅ Fully Supported |
+| PowerShell Core (any OS) | PowerShell | None | ✅ Fully Supported |
 
 ## Configuration File
 
@@ -136,6 +169,44 @@ The plugin creates/updates `.claude/preferences.json`:
 ```
 
 This file is project-specific and stored in your project's `.claude` directory.
+
+**Note:** The `.claude/preferences.json` file may be shared by multiple plugins. This plugin only manages the `MCP_EXECUTION_PLAN_MODE` key and will not affect other plugins' preferences.
+
+## Uninstallation
+
+To completely remove this plugin and clean up all its configuration:
+
+### Step 1: Clean up configuration
+
+```
+/mcp-plan-cleanup
+```
+
+This command will:
+- Remove the `MCP_EXECUTION_PLAN_MODE` key from `.claude/preferences.json`
+- If no other plugin preferences exist, delete the entire preferences file
+- If other plugins have preferences, preserve them and only remove this plugin's setting
+
+### Step 2: Uninstall the plugin
+
+```
+/plugin uninstall mcp-execution-plan-mode@skilled-execution-plan-mode
+```
+
+### Manual Cleanup (Alternative)
+
+If you prefer to clean up manually, you can remove the configuration key with `jq`:
+
+```bash
+# Remove only this plugin's key
+jq 'del(.MCP_EXECUTION_PLAN_MODE)' .claude/preferences.json > .claude/preferences.json.tmp
+mv .claude/preferences.json.tmp .claude/preferences.json
+
+# Or, if this is the only preference, delete the entire file
+rm .claude/preferences.json
+```
+
+Then uninstall the plugin as shown above.
 
 ## Troubleshooting
 
@@ -152,11 +223,18 @@ This file is project-specific and stored in your project's `.claude` directory.
 - Check hook permissions: `ls -l mcp-execution-plan-mode-plugin/hooks/`
 - Make executable: `chmod +x mcp-execution-plan-mode-plugin/hooks/session-start.sh`
 
-### Installing jq
-If `jq` is not installed:
+### Installing jq (Linux/macOS only)
+
+If you're using bash (Linux, macOS, WSL, Git Bash) and `jq` is not installed:
+
 - **Ubuntu/Debian**: `sudo apt-get install jq`
-- **MacOS**: `brew install jq`
+- **macOS**: `brew install jq`
 - **RHEL/CentOS**: `sudo yum install jq`
+- **Arch Linux**: `sudo pacman -S jq`
+- **Alpine Linux**: `apk add jq`
+- **Manual Download**: https://stedolan.github.io/jq/download/
+
+**Windows PowerShell users**: No jq installation needed - PowerShell has native JSON support
 
 ## Sharing with Your Organization
 

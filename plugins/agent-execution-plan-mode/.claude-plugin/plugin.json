@@ -5,7 +5,8 @@
   "author": {"name": "adam_brooks"},
   "commands": [
     "./commands/agent-plan-on.md",
-    "./commands/agent-plan-off.md"
+    "./commands/agent-plan-off.md",
+    "./commands/agent-plan-cleanup.md"
   ],
   "hooks": "./hooks/hooks.json"
 }

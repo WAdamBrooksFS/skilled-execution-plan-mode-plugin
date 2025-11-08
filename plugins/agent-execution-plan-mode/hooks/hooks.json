@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/plugins/marketplaces/skilled-execution-plan-mode/plugins/agent-execution-plan-mode/hooks/session-start.sh"
+            "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/session-start-wrapper.sh"
           }
         ]
       }
