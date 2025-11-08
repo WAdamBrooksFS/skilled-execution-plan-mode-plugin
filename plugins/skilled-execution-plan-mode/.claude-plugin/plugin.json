@@ -2,11 +2,13 @@
   "name": "skilled-execution-plan-mode",
   "version": "1.0.0",
   "description": "Toggle skilled execution plan mode to have Claude evaluate and mention which skills will be used during planning",
-  "author": "adam_brooks",
+  "author": {
+    "name": "adam_brooks"
+  },
   "commands": [
-    "commands/skilled-plan-on.md",
-    "commands/skilled-plan-off.md",
-    "commands/skilled-plan-cleanup.md"
+    "./commands/skilled-plan-on.md",
+    "./commands/skilled-plan-off.md",
+    "./commands/skilled-plan-cleanup.md"
   ],
   "hooks": "./hooks/hooks.json"
 }

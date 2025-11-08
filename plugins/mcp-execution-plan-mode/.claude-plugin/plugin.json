@@ -1,0 +1,11 @@
+{
+  "name": "mcp-execution-plan-mode",
+  "version": "1.0.0",
+  "description": "Toggle MCP execution plan mode to have Claude evaluate and mention which MCP servers will be useful during planning",
+  "author": {"name": "adam_brooks"},
+  "commands": [
+    "./commands/mcp-plan-on.md",
+    "./commands/mcp-plan-off.md"
+  ],
+  "hooks": "./hooks/hooks.json"
+}

@@ -1,4 +1,4 @@
-# Skilled Execution Plan Mode Marketplace
+# Execution Plan Mode Marketplace
 
 **Version:** 1.0.0
 **Owner:** Adam Brooks (william.brooks@familysearch.org)
@@ -9,7 +9,7 @@ A Claude Code marketplace providing plugins for enhanced plan mode functionality
 
 ## Overview
 
-This marketplace provides plugins that enhance Claude Code's plan mode capabilities, allowing you to control how Claude presents and executes plans.
+This marketplace provides plugins that enhance Claude Code's plan mode capabilities, allowing you to control how Claude presents and executes plans. Choose from three independent plugins to enable proactive evaluation of skills, agents, and MCP servers during planning.
 
 ---
 
@@ -40,25 +40,46 @@ This will enable skilled execution plan mode. See the plugin documentation for m
 ```
 skilled-execution-plan-mode/
 ├── .claude-plugin/
-│   └── marketplace.json              # Marketplace manifest
+│   └── marketplace.json                    # Marketplace manifest
 ├── plugins/
-│   └── skilled-execution-plan-mode/  # Main plugin
+│   ├── skilled-execution-plan-mode/        # Skills plugin
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── commands/
+│   │   │   ├── skilled-plan-on.md
+│   │   │   └── skilled-plan-off.md
+│   │   ├── hooks/
+│   │   │   ├── hooks.json
+│   │   │   └── session-start.sh
+│   │   └── README.md
+│   ├── agent-execution-plan-mode/          # Agents plugin
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── commands/
+│   │   │   ├── agent-plan-on.md
+│   │   │   └── agent-plan-off.md
+│   │   ├── hooks/
+│   │   │   ├── hooks.json
+│   │   │   └── session-start.sh
+│   │   └── README.md
+│   └── mcp-execution-plan-mode/            # MCP plugin
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── commands/
-│       │   ├── skilled-plan-on.md
-│       │   └── skilled-plan-off.md
+│       │   ├── mcp-plan-on.md
+│       │   └── mcp-plan-off.md
 │       ├── hooks/
+│       │   ├── hooks.json
 │       │   └── session-start.sh
-│       └── README.md                 # Plugin documentation
-└── README.md                         # This file
+│       └── README.md
+└── README.md                               # This file
 ```
 
 ---
 
 ## Available Plugins
 
-### Skilled Execution Plan Mode Plugin (v1.0.0)
+### 1. Skilled Execution Plan Mode Plugin (v1.0.0)
 
 **Category:** Productivity
 **Status:** Available
@@ -78,6 +99,66 @@ Control whether Claude proactively evaluates and mentions which skills will be u
 ```
 
 **Learn More:** See `plugins/skilled-execution-plan-mode/README.md`
+
+---
+
+### 2. Agent Execution Plan Mode Plugin (v1.0.0)
+
+**Category:** Productivity
+**Status:** Available
+
+Control whether Claude proactively evaluates and mentions which agents will be useful during plan mode.
+
+**Features:**
+- Toggle commands (`/agent-plan-on`, `/agent-plan-off`)
+- SessionStart hook for automatic configuration
+- Persistent settings via `.claude/preferences.json`
+- Evaluates all available agents (general-purpose, Explore, sdet:*, mcp-specialist, etc.)
+- Complete documentation and examples
+
+**Quick Start:**
+```bash
+/agent-plan-on     # Enable the feature
+/agent-plan-off    # Disable the feature
+```
+
+**Example Output:**
+```
+Step 2: Explore codebase structure [Explore agent]
+Step 3: Create accessibility tests [sdet:playwright-engineer agent]
+```
+
+**Learn More:** See `plugins/agent-execution-plan-mode/README.md`
+
+---
+
+### 3. MCP Execution Plan Mode Plugin (v1.0.0)
+
+**Category:** Productivity
+**Status:** Available
+
+Control whether Claude proactively evaluates and mentions which MCP servers will be useful during plan mode.
+
+**Features:**
+- Toggle commands (`/mcp-plan-on`, `/mcp-plan-off`)
+- SessionStart hook for automatic configuration
+- Persistent settings via `.claude/preferences.json`
+- Evaluates all available MCP servers in your environment
+- Complete documentation and examples
+
+**Quick Start:**
+```bash
+/mcp-plan-on     # Enable the feature
+/mcp-plan-off    # Disable the feature
+```
+
+**Example Output:**
+```
+Step 2: Navigate to login page [mcp__plugin_sdet_playwright MCP]
+Step 3: Take accessibility snapshot [mcp__plugin_sdet_playwright MCP]
+```
+
+**Learn More:** See `plugins/mcp-execution-plan-mode/README.md`
 
 ---
 
@@ -120,15 +201,17 @@ If `jq` is not installed:
 
 ## Configuration
 
-The marketplace stores configuration in `.claude/preferences.json`:
+The marketplace stores configuration in `.claude/preferences.json`. Each plugin can be enabled/disabled independently:
 
 ```json
 {
-  "SKILLED_EXECUTION_PLAN_MODE": true
+  "SKILLED_EXECUTION_PLAN_MODE": true,
+  "AGENT_EXECUTION_PLAN_MODE": true,
+  "MCP_EXECUTION_PLAN_MODE": true
 }
 ```
 
-This file is project-specific and persists across all sessions.
+This file is project-specific and persists across all sessions. You can enable any combination of these modes based on your preferences.
 
 ---
 
@@ -200,12 +283,20 @@ To add a new plugin to this marketplace:
 
 ## Version History
 
-**1.0.0** (2025-10-21)
-- Initial marketplace release
+**1.0.0** (2025-10-27)
+- Initial marketplace release with three plugins
 - Skilled execution plan mode plugin (v1.0.0)
-- Toggle commands for enabling/disabling
-- SessionStart hook integration
-- Persistent configuration
+  - Toggle commands for enabling/disabling skill evaluation
+  - SessionStart hook integration
+  - Persistent configuration
+- Agent execution plan mode plugin (v1.0.0)
+  - Toggle commands for enabling/disabling agent evaluation
+  - Evaluates all available agents during planning
+  - Independent configuration from other plugins
+- MCP execution plan mode plugin (v1.0.0)
+  - Toggle commands for enabling/disabling MCP server evaluation
+  - Evaluates available MCP servers during planning
+  - Independent configuration from other plugins
 
 ---
 
