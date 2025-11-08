@@ -1,0 +1,12 @@
+{
+  "name": "plan-annotate-agents",
+  "version": "1.0.0",
+  "description": "Annotate plan steps with which agents will be useful",
+  "author": {"name": "adam_brooks"},
+  "commands": [
+    "./commands/planning-agents-annotations-on.md",
+    "./commands/planning-agents-annotations-off.md",
+    "./commands/planning-agents-annotations-cleanup.md"
+  ],
+  "hooks": "./hooks/hooks.json"
+}

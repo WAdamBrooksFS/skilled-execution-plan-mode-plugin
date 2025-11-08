@@ -1,4 +1,4 @@
-# Execution Plan Mode Marketplace
+# Plan Annotations Marketplace
 
 **Version:** 1.0.0
 **Owner:** Adam Brooks (william.brooks@familysearch.org)
@@ -20,7 +20,7 @@ This marketplace provides plugins that enhance Claude Code's plan mode capabilit
 Add this marketplace to Claude Code:
 
 ```bash
-/plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
+/plugin marketplace add WAdamBrooksFS/plan-annotations
 ```
 
 ### First Time Setup
@@ -28,7 +28,7 @@ Add this marketplace to Claude Code:
 Once the marketplace is installed, the plugins will be available for use. Start with:
 
 ```bash
-/skilled-plan-on
+/planning-skills-annotations-on
 ```
 
 This will enable skilled execution plan mode. See the plugin documentation for more details.
@@ -38,11 +38,11 @@ This will enable skilled execution plan mode. See the plugin documentation for m
 ## Marketplace Structure
 
 ```
-skilled-execution-plan-mode/
+plan-annotate-skills/
 ├── .claude-plugin/
 │   └── marketplace.json                    # Marketplace manifest
 ├── plugins/
-│   ├── skilled-execution-plan-mode/        # Skills plugin
+│   ├── plan-annotate-skills/        # Skills plugin
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
 │   │   ├── commands/
@@ -52,7 +52,7 @@ skilled-execution-plan-mode/
 │   │   │   ├── hooks.json
 │   │   │   └── session-start.sh
 │   │   └── README.md
-│   ├── agent-execution-plan-mode/          # Agents plugin
+│   ├── plan-annotate-agents/          # Agents plugin
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
 │   │   ├── commands/
@@ -62,7 +62,7 @@ skilled-execution-plan-mode/
 │   │   │   ├── hooks.json
 │   │   │   └── session-start.sh
 │   │   └── README.md
-│   └── mcp-execution-plan-mode/            # MCP plugin
+│   └── plan-annotate-mcp/            # MCP plugin
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── commands/
@@ -79,7 +79,7 @@ skilled-execution-plan-mode/
 
 ## Available Plugins
 
-### 1. Skilled Execution Plan Mode Plugin (v1.0.0)
+### 1. Plan Annotations: Skills Plugin (v1.0.0)
 
 **Category:** Productivity
 **Status:** Available
@@ -87,22 +87,22 @@ skilled-execution-plan-mode/
 Control whether Claude proactively evaluates and mentions which skills will be used during plan mode.
 
 **Features:**
-- Toggle commands (`/skilled-plan-on`, `/skilled-plan-off`)
+- Toggle commands (`/planning-skills-annotations-on`, `/planning-skills-annotations-off`)
 - SessionStart hook for automatic configuration
 - Persistent settings via `.claude/preferences.json`
 - Complete documentation and examples
 
 **Quick Start:**
 ```bash
-/skilled-plan-on     # Enable the feature
-/skilled-plan-off    # Disable the feature
+/planning-skills-annotations-on     # Enable the feature
+/planning-skills-annotations-off    # Disable the feature
 ```
 
-**Learn More:** See `plugins/skilled-execution-plan-mode/README.md`
+**Learn More:** See `plugins/plan-annotate-skills/README.md`
 
 ---
 
-### 2. Agent Execution Plan Mode Plugin (v1.0.0)
+### 2. Plan Annotations: Agents Plugin (v1.0.0)
 
 **Category:** Productivity
 **Status:** Available
@@ -110,7 +110,7 @@ Control whether Claude proactively evaluates and mentions which skills will be u
 Control whether Claude proactively evaluates and mentions which agents will be useful during plan mode.
 
 **Features:**
-- Toggle commands (`/agent-plan-on`, `/agent-plan-off`)
+- Toggle commands (`/planning-agents-annotations-on`, `/planning-agents-annotations-off`)
 - SessionStart hook for automatic configuration
 - Persistent settings via `.claude/preferences.json`
 - Evaluates all available agents (general-purpose, Explore, sdet:*, mcp-specialist, etc.)
@@ -118,8 +118,8 @@ Control whether Claude proactively evaluates and mentions which agents will be u
 
 **Quick Start:**
 ```bash
-/agent-plan-on     # Enable the feature
-/agent-plan-off    # Disable the feature
+/planning-agents-annotations-on     # Enable the feature
+/planning-agents-annotations-off    # Disable the feature
 ```
 
 **Example Output:**
@@ -128,11 +128,11 @@ Step 2: Explore codebase structure [Explore agent]
 Step 3: Create accessibility tests [sdet:playwright-engineer agent]
 ```
 
-**Learn More:** See `plugins/agent-execution-plan-mode/README.md`
+**Learn More:** See `plugins/plan-annotate-agents/README.md`
 
 ---
 
-### 3. MCP Execution Plan Mode Plugin (v1.0.0)
+### 3. Plan Annotations: MCP Plugin (v1.0.0)
 
 **Category:** Productivity
 **Status:** Available
@@ -140,7 +140,7 @@ Step 3: Create accessibility tests [sdet:playwright-engineer agent]
 Control whether Claude proactively evaluates and mentions which MCP servers will be useful during plan mode.
 
 **Features:**
-- Toggle commands (`/mcp-plan-on`, `/mcp-plan-off`)
+- Toggle commands (`/planning-mcp-annotations-on`, `/planning-mcp-annotations-off`)
 - SessionStart hook for automatic configuration
 - Persistent settings via `.claude/preferences.json`
 - Evaluates all available MCP servers in your environment
@@ -148,8 +148,8 @@ Control whether Claude proactively evaluates and mentions which MCP servers will
 
 **Quick Start:**
 ```bash
-/mcp-plan-on     # Enable the feature
-/mcp-plan-off    # Disable the feature
+/planning-mcp-annotations-on     # Enable the feature
+/planning-mcp-annotations-off    # Disable the feature
 ```
 
 **Example Output:**
@@ -158,7 +158,7 @@ Step 2: Navigate to login page [mcp__plugin_sdet_playwright MCP]
 Step 3: Take accessibility snapshot [mcp__plugin_sdet_playwright MCP]
 ```
 
-**Learn More:** See `plugins/mcp-execution-plan-mode/README.md`
+**Learn More:** See `plugins/plan-annotate-mcp/README.md`
 
 ---
 
@@ -168,7 +168,7 @@ Step 3: Take accessibility snapshot [mcp__plugin_sdet_playwright MCP]
 
 When skilled execution plan mode is enabled:
 
-1. You run `/skilled-plan-on` to enable the feature
+1. You run `/planning-skills-annotations-on` to enable the feature
 2. The setting is saved to `.claude/preferences.json`
 3. On each new session, the SessionStart hook checks this setting
 4. If enabled, Claude is instructed to evaluate and mention skills during planning
@@ -205,9 +205,9 @@ The marketplace stores configuration in `.claude/preferences.json`. Each plugin 
 
 ```json
 {
-  "SKILLED_EXECUTION_PLAN_MODE": true,
-  "AGENT_EXECUTION_PLAN_MODE": true,
-  "MCP_EXECUTION_PLAN_MODE": true
+  "SKILLS_PLAN_ANNOTATIONS": true,
+  "AGENTS_PLAN_ANNOTATIONS": true,
+  "MCP_PLAN_ANNOTATIONS": true
 }
 ```
 
@@ -226,8 +226,8 @@ This file is project-specific and persists across all sessions. You can enable a
 
 2. Try removing and re-adding:
    ```bash
-   /plugin marketplace remove WAdamBrooksFS/skilled-execution-plan-mode-plugin
-   /plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
+   /plugin marketplace remove WAdamBrooksFS/plan-annotations
+   /plugin marketplace add WAdamBrooksFS/plan-annotations
    ```
 
 ### Commands not working
@@ -252,7 +252,7 @@ This marketplace can be shared across your organization:
 
 **Via GitHub (Recommended):**
 ```bash
-/plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
+/plugin marketplace add WAdamBrooksFS/plan-annotations
 ```
 
 Team members can then install plugins from the marketplace using standard Claude Code plugin commands.
@@ -275,8 +275,8 @@ To add a new plugin to this marketplace:
 
 **Questions or issues?**
 
-- Check the plugin-specific README: `plugins/skilled-execution-plan-mode/README.md`
-- File an issue: https://github.com/WAdamBrooksFS/skilled-execution-plan-mode-plugin/issues
+- Check the plugin-specific README: `plugins/plan-annotate-skills/README.md`
+- File an issue: https://github.com/WAdamBrooksFS/plan-annotations/issues
 - Contact: Adam Brooks (william.brooks@familysearch.org)
 
 ---

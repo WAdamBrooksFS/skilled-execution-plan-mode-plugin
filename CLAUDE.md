@@ -6,22 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Claude Code **marketplace** repository containing three independent plugins that enhance plan mode functionality:
 
-1. **skilled-execution-plan-mode** - Evaluates and mentions available skills during plan mode
-2. **agent-execution-plan-mode** - Evaluates and mentions available agents during plan mode
-3. **mcp-execution-plan-mode** - Evaluates and mentions available MCP servers during plan mode
+1. **plan-annotate-skills** - Evaluates and mentions available skills during plan mode
+2. **plan-annotate-agents** - Evaluates and mentions available agents during plan mode
+3. **plan-annotate-mcp** - Evaluates and mentions available MCP servers during plan mode
 
 All plugins share a common architecture and are **enabled by default** upon installation. Each plugin only recommends capabilities that are actually available and enabled in the user's environment.
 
 ## Repository Structure
 
 ```
-skilled-execution-plan-mode/
+plan-annotate-skills/
 ├── .claude-plugin/
 │   └── marketplace.json           # Marketplace manifest registering all plugins
 ├── plugins/
-│   ├── skilled-execution-plan-mode/
-│   ├── agent-execution-plan-mode/
-│   └── mcp-execution-plan-mode/
+│   ├── plan-annotate-skills/
+│   ├── plan-annotate-agents/
+│   └── plan-annotate-mcp/
 └── README.md
 ```
 
@@ -74,9 +74,9 @@ All plugins use `.claude/preferences.json` to store their enabled/disabled state
 
 ```json
 {
-  "SKILLED_EXECUTION_PLAN_MODE": true,
-  "AGENT_EXECUTION_PLAN_MODE": true,
-  "MCP_EXECUTION_PLAN_MODE": true
+  "SKILLS_PLAN_ANNOTATIONS": true,
+  "AGENTS_PLAN_ANNOTATIONS": true,
+  "MCP_PLAN_ANNOTATIONS": true
 }
 ```
 
@@ -128,7 +128,7 @@ To test a plugin locally after making changes:
 1. **Test the hook scripts directly:**
    ```bash
    # For Bash version:
-   cd plugins/skilled-execution-plan-mode
+   cd plugins/plan-annotate-skills
    bash hooks/session-start.sh
 
    # For PowerShell version:
@@ -137,8 +137,8 @@ To test a plugin locally after making changes:
 
 2. **Test the wrapper:**
    ```bash
-   export CLAUDE_PLUGIN_ROOT="$(pwd)/plugins/skilled-execution-plan-mode"
-   sh plugins/skilled-execution-plan-mode/hooks/session-start-wrapper.sh
+   export CLAUDE_PLUGIN_ROOT="$(pwd)/plugins/plan-annotate-skills"
+   sh plugins/plan-annotate-skills/hooks/session-start-wrapper.sh
    ```
 
 3. **Test in Claude Code:**
@@ -157,9 +157,9 @@ When modifying plugin functionality, changes typically need to be applied to all
 - Architecture improvements → Apply to all three plugin directories
 
 **Plugin-specific differences:**
-- **skilled-execution-plan-mode**: Checks available_skills list in Skill tool
-- **agent-execution-plan-mode**: Checks enabled plugins and built-in agents (general-purpose, Explore, Plan)
-- **mcp-execution-plan-mode**: Checks function tools list for `mcp__` prefixed tools
+- **plan-annotate-skills**: Checks available_skills list in Skill tool
+- **plan-annotate-agents**: Checks enabled plugins and built-in agents (general-purpose, Explore, Plan)
+- **plan-annotate-mcp**: Checks function tools list for `mcp__` prefixed tools
 
 ## Git Workflow
 
@@ -186,7 +186,7 @@ git push origin main
 
 The marketplace is distributed via GitHub and installed with:
 ```
-/plugin marketplace add WAdamBrooksFS/skilled-execution-plan-mode-plugin
+/plugin marketplace add WAdamBrooksFS/plan-annotate-skills-plugin
 ```
 
 When users install the marketplace, all three plugins become available. The marketplace.json file at `.claude-plugin/marketplace.json` registers all plugins with their metadata.

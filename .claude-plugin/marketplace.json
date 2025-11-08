@@ -1,38 +1,38 @@
 {
-  "name": "skilled-execution-plan-mode",
+  "name": "plan-annotations",
   "owner": {
     "name": "Adam Brooks",
     "email": "william.brooks@familysearch.org",
     "url": "https://github.com/WAdamBrooksFS"
   },
   "metadata": {
-    "description": "Marketplace for execution plan mode plugins, enabling Claude to proactively evaluate and mention which skills, agents, and MCP servers will be used during plan mode.",
+    "description": "Marketplace for plan annotation plugins, enabling Claude to annotate plan steps with which skills, agents, and MCP servers will be used.",
     "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "skilled-execution-plan-mode",
-      "source": "./plugins/skilled-execution-plan-mode",
-      "description": "Toggle skilled execution plan mode to have Claude evaluate and mention which skills will be used during planning. Provides /skilled-plan-on and /skilled-plan-off commands with persistent configuration.",
+      "name": "plan-annotate-skills",
+      "source": "./plugins/plan-annotate-skills",
+      "description": "Annotate plan steps with which skills will be used. Provides /planning-skills-annotations-on and /planning-skills-annotations-off commands with persistent configuration.",
       "version": "1.0.0",
       "category": "productivity",
-      "keywords": ["planning", "skills", "plan-mode", "configuration", "productivity"]
+      "keywords": ["planning", "skills", "annotations", "configuration", "productivity"]
     },
     {
-      "name": "agent-execution-plan-mode",
-      "source": "./plugins/agent-execution-plan-mode",
-      "description": "Toggle agent execution plan mode to have Claude evaluate and mention which agents will be useful during planning. Provides /agent-plan-on and /agent-plan-off commands with persistent configuration.",
+      "name": "plan-annotate-agents",
+      "source": "./plugins/plan-annotate-agents",
+      "description": "Annotate plan steps with which agents will be useful. Provides /planning-agents-annotations-on and /planning-agents-annotations-off commands with persistent configuration.",
       "version": "1.0.0",
       "category": "productivity",
-      "keywords": ["planning", "agents", "plan-mode", "configuration", "productivity", "qa", "testing"]
+      "keywords": ["planning", "agents", "annotations", "configuration", "productivity", "qa", "testing"]
     },
     {
-      "name": "mcp-execution-plan-mode",
-      "source": "./plugins/mcp-execution-plan-mode",
-      "description": "Toggle MCP execution plan mode to have Claude evaluate and mention which MCP servers will be useful during planning. Provides /mcp-plan-on and /mcp-plan-off commands with persistent configuration.",
+      "name": "plan-annotate-mcp",
+      "source": "./plugins/plan-annotate-mcp",
+      "description": "Annotate plan steps with which MCP servers will be used. Provides /planning-mcp-annotations-on and /planning-mcp-annotations-off commands with persistent configuration.",
       "version": "1.0.0",
       "category": "productivity",
-      "keywords": ["planning", "mcp", "plan-mode", "configuration", "productivity", "automation"]
+      "keywords": ["planning", "mcp", "annotations", "configuration", "productivity", "automation"]
     }
   ]
 }

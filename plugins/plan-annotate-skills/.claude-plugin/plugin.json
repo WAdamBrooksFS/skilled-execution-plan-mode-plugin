@@ -1,0 +1,14 @@
+{
+  "name": "plan-annotate-skills",
+  "version": "1.0.0",
+  "description": "Annotate plan steps with which skills will be used",
+  "author": {
+    "name": "adam_brooks"
+  },
+  "commands": [
+    "./commands/planning-skills-annotations-on.md",
+    "./commands/planning-skills-annotations-off.md",
+    "./commands/planning-skills-annotations-cleanup.md"
+  ],
+  "hooks": "./hooks/hooks.json"
+}
