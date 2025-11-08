@@ -25,7 +25,7 @@ try {
 # Auto-initialize SKILLED_EXECUTION_PLAN_MODE if it doesn't exist
 if ($null -eq $prefs.SKILLED_EXECUTION_PLAN_MODE) {
     # Add the property
-    $prefs | Add-Member -MemberType NoteProperty -Name "SKILLED_EXECUTION_PLAN_MODE" -Value $false -Force
+    $prefs | Add-Member -MemberType NoteProperty -Name "SKILLED_EXECUTION_PLAN_MODE" -Value $true -Force
 
     # Write back to file
     $prefs | ConvertTo-Json -Depth 10 | Out-File -FilePath $PrefsFile -Encoding UTF8 -NoNewline
@@ -38,9 +38,11 @@ if ($prefs.SKILLED_EXECUTION_PLAN_MODE -eq $true) {
 
 When you enter plan mode, you should:
 1. Check ``.claude/preferences.json`` to confirm ``SKILLED_EXECUTION_PLAN_MODE`` is ``true``
-2. While creating the plan, proactively evaluate which skills (if any) would be useful for each step
-3. Include mentions of skills in the plan presentation (e.g., "Step 2: Extract PDF data [**pdf** skill]")
-4. This helps the user understand what capabilities will be leveraged before execution begins
+2. Check which skills are actually available by looking at the available_skills list in the Skill tool
+3. While creating the plan, proactively evaluate which AVAILABLE skills (if any) would be useful for each step
+4. ONLY recommend skills that are currently available and enabled - do not suggest disabled or unavailable skills
+5. Include mentions of available skills in the plan presentation (e.g., "Step 2: Extract PDF data [**pdf** skill]")
+6. This helps the user understand what capabilities will be leveraged before execution begins
 
 This mode is currently ENABLED. The user can disable it with ``/skilled-plan-off``.
 "@
