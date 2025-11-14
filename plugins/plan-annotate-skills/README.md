@@ -243,12 +243,14 @@ For more information about the marketplace structure and available plugins, see 
 ```
 plugins/plan-annotate-skills/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
+│   └── plugin.json          # Plugin manifest with inline hooks
 ├── commands/
 │   ├── skilled-plan-on.md   # Enable command
 │   └── skilled-plan-off.md  # Disable command
 ├── hooks/
-│   └── session-start.sh     # SessionStart hook
+│   ├── session-start-wrapper.sh # Platform detection wrapper
+│   ├── session-start.sh         # Bash SessionStart hook
+│   └── session-start.ps1        # PowerShell SessionStart hook
 └── README.md                # This file
 ```
 

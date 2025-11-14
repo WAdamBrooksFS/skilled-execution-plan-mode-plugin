@@ -286,13 +286,14 @@ If you're using bash (Linux, macOS, WSL, Git Bash) and `jq` is not installed:
 ```
 plan-annotate-agents-plugin/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
+│   └── plugin.json          # Plugin manifest with inline hooks
 ├── commands/
 │   ├── agent-plan-on.md     # Enable command
 │   └── agent-plan-off.md    # Disable command
 ├── hooks/
-│   ├── hooks.json           # Hook configuration
-│   └── session-start.sh     # SessionStart hook
+│   ├── session-start-wrapper.sh # Platform detection wrapper
+│   ├── session-start.sh         # Bash SessionStart hook
+│   └── session-start.ps1        # PowerShell SessionStart hook
 └── README.md                # This file
 ```
 

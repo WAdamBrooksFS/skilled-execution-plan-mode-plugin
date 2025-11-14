@@ -29,14 +29,13 @@ Each plugin follows an identical structure:
 ```
 plugin-name/
 ├── .claude-plugin/
-│   └── plugin.json                # Plugin manifest with commands and hooks
+│   └── plugin.json                # Plugin manifest with commands and inline hooks
 ├── .gitattributes                 # Line ending enforcement (CRITICAL for cross-platform)
 ├── commands/
 │   ├── {name}-plan-on.md          # Enable command
 │   ├── {name}-plan-off.md         # Disable command
 │   └── {name}-plan-cleanup.md     # Uninstallation cleanup command
 ├── hooks/
-│   ├── hooks.json                 # Hook registration using ${CLAUDE_PLUGIN_ROOT}
 │   ├── session-start-wrapper.sh   # Platform detection (POSIX sh)
 │   ├── session-start.sh           # Bash implementation (requires jq)
 │   └── session-start.ps1          # PowerShell implementation (no external deps)
@@ -47,13 +46,24 @@ plugin-name/
 
 ### Cross-Platform Hook Architecture
 
-All plugins use a **three-layer hook system** to support all Claude Code platforms:
+All plugins use a **two-layer hook system** to support all Claude Code platforms:
 
-1. **hooks.json** - Registers the hook with Claude Code:
+1. **plugin.json inline hooks** - Registers the SessionStart hook directly in the plugin manifest:
    ```json
    {
-     "type": "command",
-     "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/session-start-wrapper.sh"
+     "hooks": {
+       "SessionStart": [
+         {
+           "matcher": "*",
+           "hooks": [
+             {
+               "type": "command",
+               "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/session-start-wrapper.sh"
+             }
+           ]
+         }
+       ]
+     }
    }
    ```
    Note: Always use `${CLAUDE_PLUGIN_ROOT}` for plugin-relative paths.

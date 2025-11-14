@@ -10,5 +10,17 @@
     "./commands/planning-skills-annotations-off.md",
     "./commands/planning-skills-annotations-cleanup.md"
   ],
-  "hooks": "./hooks/hooks.json"
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/session-start-wrapper.sh"
+          }
+        ]
+      }
+    ]
+  }
 }

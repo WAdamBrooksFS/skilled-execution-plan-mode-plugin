@@ -8,5 +8,17 @@
     "./commands/planning-agents-annotations-off.md",
     "./commands/planning-agents-annotations-cleanup.md"
   ],
-  "hooks": "./hooks/hooks.json"
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/session-start-wrapper.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
