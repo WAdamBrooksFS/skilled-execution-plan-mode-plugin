@@ -38,6 +38,18 @@ This plugin is **enabled by default** upon installation. Claude will automatical
 
 You can toggle the plugin on/off at any time using the commands below.
 
+### Verify Installation (Bash Users Only)
+
+Before enabling the plugin, Bash users should verify that `jq` is installed:
+
+```bash
+which jq
+```
+
+If the command returns a path (e.g., `/usr/bin/jq`), you're all set. If not found, see the "Installing jq" section in Requirements below.
+
+**PowerShell users can skip this step** - no external dependencies are required.
+
 ### Enable Plan Annotations: MCP
 
 ```
@@ -159,6 +171,33 @@ The plugin includes:
 
 The wrapper automatically chooses the correct script based on available shells, ensuring seamless operation across all platforms.
 
+### Runtime Dependency Checking
+
+The plugin automatically checks for `jq` at the start of each Claude Code session (SessionStart hook). If `jq` is missing on Bash-based systems, you'll see a helpful error message with installation instructions in Claude's context at the beginning of your session.
+
+**What happens if jq is missing:**
+- The SessionStart hook detects the missing dependency
+- An error message displays in Claude's session context
+- The message includes platform-specific installation instructions
+- You can install `jq` and start a new session to resolve the issue
+
+**Example error message you might see:**
+```
+ERROR: jq is required but not installed.
+
+Please install jq:
+  Ubuntu/Debian: sudo apt-get install jq
+  macOS:         brew install jq
+  RHEL/CentOS:   sudo yum install jq
+  Arch Linux:    sudo pacman -S jq
+```
+
+**Important notes:**
+- PowerShell users will never see this error (no external dependencies needed)
+- The error appears at session start, not during plugin installation
+- The dependency check runs automatically every time a new session begins
+- Once `jq` is installed, the error will not appear in future sessions
+
 ### Supported Environments
 
 | Environment | Shell Used | External Dependencies | Status |
@@ -207,16 +246,30 @@ This command will:
 
 ### Manual Cleanup (Alternative)
 
-If you prefer to clean up manually, you can remove the configuration key with `jq`:
+If you prefer to clean up manually instead of using the `/planning-mcp-annotations-cleanup` command, you have several options:
 
+**Option 1: Using jq (Bash users with jq installed):**
 ```bash
-# Remove only this plugin's key
+# Remove only this plugin's key, preserving other plugins' preferences
 jq 'del(.MCP_PLAN_ANNOTATIONS)' .claude/preferences.json > .claude/preferences.json.tmp
 mv .claude/preferences.json.tmp .claude/preferences.json
 
 # Or, if this is the only preference, delete the entire file
 rm .claude/preferences.json
 ```
+
+**Option 2: Manual file editing (all users):**
+1. Open `.claude/preferences.json` in your text editor
+2. Remove the `"MCP_PLAN_ANNOTATIONS": true` line
+3. If no other plugin preferences remain, you can delete the entire file
+4. Save the file
+
+**Option 3: Delete the preferences file (if no other plugins use it):**
+```bash
+rm .claude/preferences.json
+```
+
+**Note:** The `/planning-mcp-annotations-cleanup` slash command does NOT require `jq` - it's a Claude Code command that handles cleanup automatically. The jq-based commands above are only needed if you want to bypass the plugin's cleanup command.
 
 Then uninstall the plugin as shown above.
 
